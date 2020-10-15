@@ -8,8 +8,11 @@ import com.hcl.project.careerguidance.domain.Medical;
 import com.hcl.project.careerguidance.domain.Railway;
 import com.hcl.project.careerguidance.domain.SSC;
 import com.hcl.project.careerguidance.domain.UPSC;
-import com.hcl.project.careerguidance.helper.ExtistingUserException;
+import com.hcl.project.careerguidance.exception.ExtistingUserException;
+import com.hcl.project.careerguidance.exception.InvalidInputDataException;
+import com.hcl.project.careerguidance.helper.ICareer;
 import com.hcl.project.careerguidance.pojo.User;
+import com.hcl.project.careerguidance.util.CareerValidation;
 
 public class UserUI {
 
@@ -58,11 +61,48 @@ public class UserUI {
 			System.out.println("\nEnter the Last Name:");
 			lastName = sc.nextLine();
 
-			System.out.println("\nEnter the Email ID:");
-			email = sc.nextLine();
-
-			System.out.println("\nEnter the Password:");
-			password = sc.nextLine();
+			boolean validEmail;
+			System.out.print("\nEmail rules:\n"
+					+ "**[_A-Za-z0-9-\\+]+ must start with string in the bracket [ ], must contains one or more (+)\n"
+					+ "** @ # must contains a \"@\" symbol\n"
+					+ "** Email should contain at least one lowercase letter(a-z), one uppercase letter(A-Z) and one special character ( @, #, %, &, !, $, etc….).\n");
+			do {
+				System.out.println("\nEnter the Email ID:");
+				email = sc.nextLine();
+				validEmail = CareerValidation.isValidEmailAddress(email);
+				if (validEmail == false) {
+					try {
+						throw new InvalidInputDataException(
+								"Invalid 'Email ID!'. Please provide correct 'Email ID' as per the rule");
+					} catch (InvalidInputDataException exc) {
+						System.out.println(
+								"Invalid 'Email ID'!. Please provide correct 'Email ID' as per the rule");
+						System.out.println("\nEnter the Email ID:");
+						email = sc.nextLine();
+					}
+				}
+			} while (validEmail != true);
+			
+			boolean validPassword;
+			System.out.print("\nPassword rules:\n"
+					+ "**Password should not contain any space.\n"
+					+ "**Password should contain at least one digit(0-9), length [8 ~ 15], at least one lowercase letter(a-z) & (A-Z) and special character ( @, #, %, &, !, $, etc….).\n");
+			do {
+				System.out.println("\nEnter the Password:");
+				password = sc.nextLine();
+				validPassword = CareerValidation.isValidPassword(password);
+				if (validPassword == false) {
+					try {
+						throw new InvalidInputDataException(
+								"Invalid 'password'!. Please provide the correct 'password' as per the rule");
+					} catch (InvalidInputDataException exc) {
+						System.err.println(
+								"IInvalid 'password'!. Please provide the correct 'password' as per the rule");
+						System.out.println("\nEnter the Password:");
+						password = sc.nextLine();
+					}
+				}
+			} while (validPassword != true);
 
 			System.out.println("\nEnter the Mobile Number:");
 			mobileNo = sc.nextLine();
@@ -83,13 +123,14 @@ public class UserUI {
 				"Enter area of interest:\n1) Engineering\n2) Banking Job\n3) Medical\n4) Railway Job\n5) SSC\n6) UPSC");
 
 		int interest = sc.nextInt();
+		
+		ICareer career;
 
 		switch (interest) {
 		
 		case 1:
-			Engineering eng = new Engineering();
-			eng.competitiveExams();
-			eng.computeEligibility();
+			career = new Engineering();
+			career.competitiveExams();
 			break;
 
 		case 2:
@@ -99,20 +140,23 @@ public class UserUI {
 			break;
 
 		case 3:
-			Medical medical = new Medical();
+			career = new Medical();
+			career.competitiveExams();
 			break;
 
 		case 4:
-			Railway railway = new Railway();
+			career = new Railway();
+			career.competitiveExams();
 			break;
 
 		case 5:
-			SSC ssc = new SSC();
+			career = new SSC();
+			career.competitiveExams();
 			break;
 
 		case 6:
-			UPSC upsc = new UPSC();
-			upsc.competitiveExams();
+			career = new UPSC();
+			career.competitiveExams();
 			break;
 
 		default:

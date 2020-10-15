@@ -24,14 +24,12 @@ public class User {
 		this.password = password;
 		this.mobileNo = mobileNo;
 		this.qualifiation = qualifiation;
+		saveEmailAndPassword(this.emailId, this.password);
+		System.out.println("\nUser has been saved successfully!!!");
 	}
 
 	Map<String, String> map = new HashMap<>();
 
-	public Map<String, String> saveEmailPassword() {
-		map.put(this.emailId, this.password);
-		return map;
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -81,19 +79,19 @@ public class User {
 		this.qualifiation = qualifiation;
 	}
 
-	//User validation
+	// User validation
 	public boolean validateUser(String email, String password) {
-
-		Map<String, String> map = saveEmailPassword();
-
 		if (map.containsKey(email)) {
-
 			if (map.get(email).equals(password)) {
 				return true;
 			}
 		}
 		return false;
-
+	}
+	
+	public Map<String, String> saveEmailAndPassword(String emailId, String password) {
+		map.put(emailId, password);
+		return map;
 	}
 
 	@Override

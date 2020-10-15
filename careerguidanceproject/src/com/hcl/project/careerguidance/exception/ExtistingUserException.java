@@ -1,4 +1,4 @@
-package com.hcl.project.careerguidance.helper;
+package com.hcl.project.careerguidance.exception;
 
 public class ExtistingUserException extends Exception {
 	
