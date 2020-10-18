@@ -9,7 +9,6 @@ import com.hcl.project.careerguidance.helper.ICareerConstants;
 import com.hcl.project.careerguidance.pojo.User;
 
 public class UserBO {
-	//static File file = new File("C:\\Users\\user\\Desktop\\Project File\\Register.txt");
 
 	public static void register(User user) throws IOException {
 		try {
@@ -40,24 +39,4 @@ public class UserBO {
 
 	}
 
-	/*@SuppressWarnings("resource")
-	public static boolean validate(String email, String password) {
-		try {
-			FileReader reader = new FileReader(file);
-			BufferedReader bufferedReader = new BufferedReader(reader);
-			String line;
-			while ((line = bufferedReader.readLine()) != null) {
-				String[] data = line.split(",");
-				if (data.length != 0) {
-					if (data[3].equals(email) && data[4].equals(password)) {
-						reader.close();
-						return true;
-					}
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}*/
 }

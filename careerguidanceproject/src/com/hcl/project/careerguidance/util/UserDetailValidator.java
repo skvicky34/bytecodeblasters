@@ -2,7 +2,6 @@ package com.hcl.project.careerguidance.util;
 
 import static com.hcl.project.careerguidance.helper.ICareerConstants.EMAIL_PATTERN;
 import static com.hcl.project.careerguidance.helper.ICareerConstants.PASSWORD_PATTERN;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
