@@ -2,6 +2,9 @@ package com.hcl.project.careerguidance.domain;
 
 import com.hcl.project.careerguidance.helper.ICareer;
 
+/*
+ * This class contains UPSC jobs and competitive examination details.
+ */
 public class UPSC implements ICareer {
 
 	@Override

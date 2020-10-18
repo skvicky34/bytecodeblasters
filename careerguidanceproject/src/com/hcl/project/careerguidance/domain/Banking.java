@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 import com.hcl.project.careerguidance.helper.ICareer;
 
+/*
+ * This class contains Banking job and competitive examination details.
+ */
 public class Banking implements ICareer {
 
 	@Override

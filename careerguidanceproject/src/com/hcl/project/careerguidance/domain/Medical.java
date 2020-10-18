@@ -2,6 +2,9 @@ package com.hcl.project.careerguidance.domain;
 
 import com.hcl.project.careerguidance.helper.ICareer;
 
+/*
+ * This class contains Medical jobs and competitive examination details.
+ */
 public class Medical implements ICareer {
 
 	@Override

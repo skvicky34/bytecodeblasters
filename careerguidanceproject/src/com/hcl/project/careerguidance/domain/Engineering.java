@@ -2,9 +2,10 @@ package com.hcl.project.careerguidance.domain;
 
 import com.hcl.project.careerguidance.helper.ICareer;
 
+/*
+ * This class contains Engineering job and competitive examination details.
+ */
 public class Engineering implements ICareer{
-	
-
 
 	@Override
 	public void competitiveExams() {

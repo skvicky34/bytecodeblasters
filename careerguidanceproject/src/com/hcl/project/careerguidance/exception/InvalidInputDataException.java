@@ -1,5 +1,8 @@
 package com.hcl.project.careerguidance.exception;
 
+/*
+ * This exception class is used for the Career Guidance user input data validation.
+ */
 public class InvalidInputDataException extends RuntimeException {
 
 	/**

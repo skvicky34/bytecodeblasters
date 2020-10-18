@@ -1,5 +1,6 @@
 package com.hcl.project.careerguidance.presentation;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import com.hcl.project.careerguidance.domain.Banking;
@@ -12,8 +13,12 @@ import com.hcl.project.careerguidance.exception.ExtistingUserException;
 import com.hcl.project.careerguidance.exception.InvalidInputDataException;
 import com.hcl.project.careerguidance.helper.ICareer;
 import com.hcl.project.careerguidance.pojo.User;
-import com.hcl.project.careerguidance.util.CareerValidation;
-
+import com.hcl.project.careerguidance.util.UserBO;
+import com.hcl.project.careerguidance.util.UserDetailValidator;;
+/*
+ * This class contains main () method and represent as the UI of Career Guidance.
+ * This is used to receive user input data and provide output based on the user choice.
+ */
 public class UserUI {
 
 	public static void main(String[] args) {
@@ -21,7 +26,8 @@ public class UserUI {
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 
-		String firstName, lastName, email, password, mobileNo, qualification;
+		String firstName, lastName, email, password, qualification;
+		long mobileNo;
 		User user;
 
 		System.out.println(
@@ -31,7 +37,7 @@ public class UserUI {
 		sc.nextLine();
 
 		switch (choice) {
-		
+
 		case 1:
 			System.out.println("Enter the email id:");
 			email = sc.nextLine();
@@ -39,9 +45,7 @@ public class UserUI {
 			System.out.println("\nEnter the password:");
 			password = sc.nextLine();
 
-			user = new User();
-
-			boolean flag = user.validateUser(email, password);
+			boolean flag=UserDetailValidator.isExistingUser(email, password);
 
 			if (flag == false) {
 				try {
@@ -69,50 +73,59 @@ public class UserUI {
 			do {
 				System.out.println("\nEnter the Email ID:");
 				email = sc.nextLine();
-				validEmail = CareerValidation.isValidEmailAddress(email);
+				validEmail = UserDetailValidator.isValidEmailAddress(email);
 				if (validEmail == false) {
 					try {
 						throw new InvalidInputDataException(
 								"Invalid 'Email ID!'. Please provide correct 'Email ID' as per the rule");
 					} catch (InvalidInputDataException exc) {
-						System.out.println(
-								"Invalid 'Email ID'!. Please provide correct 'Email ID' as per the rule");
+						System.out.println("Invalid 'Email ID'!. Please provide correct 'Email ID' as per the rule");
 						System.out.println("\nEnter the Email ID:");
 						email = sc.nextLine();
 					}
 				}
+				if (validEmail == false) {
+					System.out.println("Invalid 'Email ID'!. Please provide correct 'Email ID' as per the rule");
+				}
 			} while (validEmail != true);
-			
+
 			boolean validPassword;
-			System.out.print("\nPassword rules:\n"
-					+ "**Password should not contain any space.\n"
+			System.out.print("\nPassword rules:\n" + "**Password should not contain any space.\n"
 					+ "**Password should contain at least one digit(0-9), length [8 ~ 15], at least one lowercase letter(a-z) & (A-Z) and special character ( @, #, %, &, !, $, etc….).\n");
 			do {
 				System.out.println("\nEnter the Password:");
 				password = sc.nextLine();
-				validPassword = CareerValidation.isValidPassword(password);
+				validPassword = UserDetailValidator.isValidPassword(password);
 				if (validPassword == false) {
 					try {
 						throw new InvalidInputDataException(
 								"Invalid 'password'!. Please provide the correct 'password' as per the rule");
 					} catch (InvalidInputDataException exc) {
-						System.err.println(
-								"IInvalid 'password'!. Please provide the correct 'password' as per the rule");
+						System.out.println("Invalid 'password'!. Please provide the correct 'password' as per the rule");
 						System.out.println("\nEnter the Password:");
 						password = sc.nextLine();
 					}
 				}
+				if (validPassword == false) {
+					System.out.println("Invalid 'password'!. Please provide the correct 'password' as per the rule");
+				}
 			} while (validPassword != true);
 
 			System.out.println("\nEnter the Mobile Number:");
-			mobileNo = sc.nextLine();
+			mobileNo = Long.parseLong(sc.nextLine());
 
 			System.out.println("\nEnter the Qualifiation:");
 			qualification = sc.nextLine();
 
 			user = new User(firstName, lastName, email, password, mobileNo, qualification);
+			try {
+				UserBO.register(user);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
-			
+
 		default:
 			System.err.println("Invalid selection!");
 			System.exit(0);
@@ -123,11 +136,11 @@ public class UserUI {
 				"Enter area of interest:\n1) Engineering\n2) Banking Job\n3) Medical\n4) Railway Job\n5) SSC\n6) UPSC");
 
 		int interest = sc.nextInt();
-		
+
 		ICareer career;
 
 		switch (interest) {
-		
+
 		case 1:
 			career = new Engineering();
 			career.competitiveExams();
