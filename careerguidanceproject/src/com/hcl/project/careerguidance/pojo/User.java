@@ -12,13 +12,13 @@ public class User {
 	private String lastName;
 	private String emailId;
 	private String password;
-	private long mobileNo;
+	private String mobileNo;
 	private String qualifiation;
 
 	public User() {
 	}
 
-	public User(String firstName, String lastName, String emailId, String password, long mobileNo,
+	public User(String firstName, String lastName, String emailId, String password, String mobileNo,
 			String qualifiation) {
 		super();
 		this.firstName = firstName;
@@ -63,11 +63,11 @@ public class User {
 		this.password = password;
 	}
 
-	public long getMobileNo() {
+	public String getMobileNo() {
 		return mobileNo;
 	}
 
-	public void setMobileNo(long mobileNo) {
+	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
 	}
 
@@ -81,7 +81,6 @@ public class User {
 
 	public Map<String, String> saveEmailAndPassword() {
 		map.put(this.emailId, this.password);
-		System.out.println(map.get(this.emailId));
 		return map;
 	}
 

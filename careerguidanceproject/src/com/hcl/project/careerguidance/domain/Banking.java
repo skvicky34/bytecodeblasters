@@ -28,6 +28,7 @@ public class Banking implements ICareer {
 
 	public void jobType() {
 		System.out.println("Please select the job type from the list\n1) Bank PO\n2) Bank Clerk\n3) Specialist Officer");
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		int choice = sc.nextInt();
 		

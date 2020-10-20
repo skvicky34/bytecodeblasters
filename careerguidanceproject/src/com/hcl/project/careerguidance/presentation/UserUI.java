@@ -13,8 +13,11 @@ import com.hcl.project.careerguidance.exception.ExtistingUserException;
 import com.hcl.project.careerguidance.exception.InvalidInputDataException;
 import com.hcl.project.careerguidance.helper.ICareer;
 import com.hcl.project.careerguidance.pojo.User;
+import com.hcl.project.careerguidance.util.PasswordEncryptor;
 import com.hcl.project.careerguidance.util.UserBO;
-import com.hcl.project.careerguidance.util.UserDetailValidator;;
+import com.hcl.project.careerguidance.util.UserDetailValidator;
+import static com.hcl.project.careerguidance.helper.ICareerConstants.SECRET_KEY;
+
 /*
  * This class contains main () method and represent as the UI of Career Guidance.
  * This is used to receive user input data and provide output based on the user choice.
@@ -26,8 +29,7 @@ public class UserUI {
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 
-		String firstName, lastName, email, password, qualification;
-		long mobileNo;
+		String firstName, lastName, email, password, qualification, mobileNo;
 		User user;
 
 		System.out.println(
@@ -45,7 +47,7 @@ public class UserUI {
 			System.out.println("\nEnter the password:");
 			password = sc.nextLine();
 
-			boolean flag=UserDetailValidator.isExistingUser(email, password);
+			boolean flag = UserDetailValidator.isExistingUser(email, password);
 
 			if (flag == false) {
 				try {
@@ -101,7 +103,8 @@ public class UserUI {
 						throw new InvalidInputDataException(
 								"Invalid 'password'!. Please provide the correct 'password' as per the rule");
 					} catch (InvalidInputDataException exc) {
-						System.out.println("Invalid 'password'!. Please provide the correct 'password' as per the rule");
+						System.out
+								.println("Invalid 'password'!. Please provide the correct 'password' as per the rule");
 						System.out.println("\nEnter the Password:");
 						password = sc.nextLine();
 					}
@@ -111,17 +114,42 @@ public class UserUI {
 				}
 			} while (validPassword != true);
 
-			System.out.println("\nEnter the Mobile Number:");
-			mobileNo = Long.parseLong(sc.nextLine());
+			String encryptedPassword = PasswordEncryptor.encrypt(password, SECRET_KEY);
+
+			boolean validMobNo;
+			System.out.println("\nMobile Number rules :\n**The first digit should contain number between 7 to 9."
+					+ "The rest 9 digit can contain any number between 0 to 9.\n"
+					+ "**Can have 11 digits also by including 0 at the starting.\n"
+					+ "**Can be of 12 digits also by including +91 at the starting\n"
+					+ "**Can be of 14 digits also by including 0091 at the starting\n");
+			do {
+				System.out.println("Enter the Mobile Number:");
+				mobileNo = sc.nextLine();
+				validMobNo = UserDetailValidator.isValidMobileNo(mobileNo);
+				if (validMobNo == false) {
+					try {
+						throw new InvalidInputDataException(
+								"Invalid 'mobile number'!. Please provide the correct 'mobile number' as per the rule");
+					} catch (InvalidInputDataException exc) {
+						System.out.println(
+								"Invalid 'mobile number'!. Please provide the correct 'mobile number' as per the rule");
+						System.out.println("\nEnter the Mobile Number:");
+						mobileNo = sc.nextLine();
+					}
+				}
+				if (validMobNo == false) {
+					System.out.println(
+							"Invalid 'mobile number'!. Please provide the correct 'mobile number' as per the rule");
+				}
+			} while (validMobNo != true);
 
 			System.out.println("\nEnter the Qualifiation:");
 			qualification = sc.nextLine();
 
-			user = new User(firstName, lastName, email, password, mobileNo, qualification);
+			user = new User(firstName, lastName, email, encryptedPassword, mobileNo, qualification);
 			try {
 				UserBO.register(user);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -131,51 +159,116 @@ public class UserUI {
 			System.exit(0);
 		}
 
-		System.out.println("---------------------------------------------------");
-		System.out.println(
-				"Enter area of interest:\n1) Engineering\n2) Banking Job\n3) Medical\n4) Railway Job\n5) SSC\n6) UPSC");
+		int userOption = 0;
+		do {
+			System.out.println("---------------------------------------------------");
+			System.out.println(
+					"Enter area of interest:\n1) Engineering\n2) Banking Job\n3) Medical\n4) Railway Job\n5) SSC\n6) UPSC");
 
-		int interest = sc.nextInt();
+			int interest = sc.nextInt();
+			System.out.println("---------------------------------------------------");
+			ICareer career;
 
-		ICareer career;
+			switch (interest) {
 
-		switch (interest) {
+			case 1:
+				career = new Engineering();
+				career.competitiveExams();
+				System.out.println(
+						"---------------------------------------------------\nEnter choice :\n1) Return to career choice menu\n2) Exit");
+				userOption = sc.nextInt();
+				if (userOption < 1 || userOption > 2) {
+					System.err.println("Invalid choice!");
+					System.exit(0);
+				} else if (userOption == 2) {
+					System.exit(0);
+				}
+				break;
 
-		case 1:
-			career = new Engineering();
-			career.competitiveExams();
-			break;
+			case 2:
+				Banking banking = new Banking();
+				banking.jobType();
+				banking.competitiveExams();
+				System.out.println(
+						"--------------------------------------------\nEnter choice :\n1) Return to career choice menu\n2) Exit");
+				userOption = sc.nextInt();
+				if (userOption < 1 || userOption > 2) {
+					System.err.println("Invalid choice!");
+					System.exit(0);
+				} else if (userOption == 2) {
+					System.exit(0);
+				}
+				break;
 
-		case 2:
-			Banking banking = new Banking();
-			banking.jobType();
-			banking.competitiveExams();
-			break;
+			case 3:
+				career = new Medical();
+				career.competitiveExams();
+				System.out.println(
+						"--------------------------------------------\nEnter choice :\n1) Return to career choice menu\n2) Exit");
+				userOption = sc.nextInt();
+				if (userOption < 1 || userOption > 2) {
+					System.err.println("Invalid choice!");
+					System.exit(0);
+				} else if (userOption == 2) {
+					System.exit(0);
+				}
+				break;
 
-		case 3:
-			career = new Medical();
-			career.competitiveExams();
-			break;
+			case 4:
+				career = new Railway();
+				career.competitiveExams();
+				System.out.println(
+						"--------------------------------------------\nEnter choice :\n1) Return to career choice menu\n2) Exit");
+				userOption = sc.nextInt();
+				if (userOption < 1 || userOption > 2) {
+					System.err.println("Invalid choice!");
+					System.exit(0);
+				} else if (userOption == 2) {
+					System.exit(0);
+				}
+				break;
 
-		case 4:
-			career = new Railway();
-			career.competitiveExams();
-			break;
+			case 5:
+				career = new SSC();
+				career.competitiveExams();
+				System.out.println(
+						"--------------------------------------------\nEnter choice :\n1) Return to career choice menu\n2) Exit");
+				userOption = sc.nextInt();
+				if (userOption < 1 || userOption > 2) {
+					System.err.println("Invalid choice!");
+					System.exit(0);
+				} else if (userOption == 2) {
+					System.exit(0);
+				}
+				break;
 
-		case 5:
-			career = new SSC();
-			career.competitiveExams();
-			break;
+			case 6:
+				career = new UPSC();
+				career.competitiveExams();
+				System.out.println(
+						"--------------------------------------------\nEnter choice :\n1) Return to career choice menu\n2) Exit");
+				userOption = sc.nextInt();
+				if (userOption < 1 || userOption > 2) {
+					System.err.println("Invalid choice!");
+					System.exit(0);
+				} else if (userOption == 2) {
+					System.exit(0);
+				}
+				break;
 
-		case 6:
-			career = new UPSC();
-			career.competitiveExams();
-			break;
-
-		default:
-			System.err.println("Invalid choice!");
-			System.exit(0);
-		}
+			default:
+				System.err.println("Invalid choice!");
+				System.out.println(
+						"---------------------------------------------------\nEnter choice :\n1) Return to career choice menu\n2) Exit");
+				userOption = sc.nextInt();
+				if (userOption < 1 || userOption > 2) {
+					System.err.println("Invalid choice!");
+					System.exit(0);
+				} else if (userOption == 2) {
+					System.exit(0);
+				}
+			}
+		} while (userOption == 1);
 
 	}
 

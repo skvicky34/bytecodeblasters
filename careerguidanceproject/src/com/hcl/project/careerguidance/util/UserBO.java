@@ -14,9 +14,9 @@ public class UserBO {
 		try {
 			if (!ICareerConstants.FILE.exists()) {
 				ICareerConstants.FILE.createNewFile();
-			} else {
+			} /*else {
 				System.out.println("File already exists.");
-			}
+			}*/
 
 		} catch (IOException e) {
 			e.printStackTrace();
