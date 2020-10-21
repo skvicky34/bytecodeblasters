@@ -38,7 +38,7 @@ public class PasswordEncryptor {
 	    } 
 	    catch (Exception exp) 
 	    {
-	        System.out.println("Error while encrypting: " + exp.toString());
+	        System.out.println("Invalid 'email id' or 'password'");
 	    }
 	    return null;
 	}
