@@ -51,7 +51,7 @@ public class UserUI {
 
 			if (flag == false) {
 				try {
-					throw new ExtistingUserException("Invalid 'email id' or 'password'");
+					throw new ExtistingUserException();
 				} catch (ExtistingUserException e) {
 					System.err.println("Invalid 'email id' or 'password'");
 					System.exit(0);
@@ -78,8 +78,7 @@ public class UserUI {
 				validEmail = UserDetailValidator.isValidEmailAddress(email);
 				if (validEmail == false) {
 					try {
-						throw new InvalidInputDataException(
-								"Invalid 'Email ID!'. Please provide correct 'Email ID' as per the rule");
+						throw new InvalidInputDataException();
 					} catch (InvalidInputDataException exc) {
 						System.out.println("Invalid 'Email ID'!. Please provide correct 'Email ID' as per the rule");
 						System.out.println("\nEnter the Email ID:");
@@ -100,8 +99,7 @@ public class UserUI {
 				validPassword = UserDetailValidator.isValidPassword(password);
 				if (validPassword == false) {
 					try {
-						throw new InvalidInputDataException(
-								"Invalid 'password'!. Please provide the correct 'password' as per the rule");
+						throw new InvalidInputDataException();
 					} catch (InvalidInputDataException exc) {
 						System.out
 								.println("Invalid 'password'!. Please provide the correct 'password' as per the rule");
@@ -128,8 +126,7 @@ public class UserUI {
 				validMobNo = UserDetailValidator.isValidMobileNo(mobileNo);
 				if (validMobNo == false) {
 					try {
-						throw new InvalidInputDataException(
-								"Invalid 'mobile number'!. Please provide the correct 'mobile number' as per the rule");
+						throw new InvalidInputDataException();
 					} catch (InvalidInputDataException exc) {
 						System.out.println(
 								"Invalid 'mobile number'!. Please provide the correct 'mobile number' as per the rule");
@@ -181,8 +178,10 @@ public class UserUI {
 					System.err.println("Invalid choice!");
 					System.exit(0);
 				} else if (userOption == 2) {
+					System.out.println("User has been exited successfully!");
 					System.exit(0);
 				}
+				System.exit(0);
 				break;
 
 			case 2:
@@ -196,6 +195,7 @@ public class UserUI {
 					System.err.println("Invalid choice!");
 					System.exit(0);
 				} else if (userOption == 2) {
+					System.out.println("User has been exited successfully!");
 					System.exit(0);
 				}
 				break;
@@ -210,6 +210,7 @@ public class UserUI {
 					System.err.println("Invalid choice!");
 					System.exit(0);
 				} else if (userOption == 2) {
+					System.out.println("User has been exited successfully!");
 					System.exit(0);
 				}
 				break;
@@ -224,6 +225,7 @@ public class UserUI {
 					System.err.println("Invalid choice!");
 					System.exit(0);
 				} else if (userOption == 2) {
+					System.out.println("User has been exited successfully!");
 					System.exit(0);
 				}
 				break;
@@ -238,6 +240,7 @@ public class UserUI {
 					System.err.println("Invalid choice!");
 					System.exit(0);
 				} else if (userOption == 2) {
+					System.out.println("User has been exited successfully!");
 					System.exit(0);
 				}
 				break;
@@ -252,12 +255,13 @@ public class UserUI {
 					System.err.println("Invalid choice!");
 					System.exit(0);
 				} else if (userOption == 2) {
+					System.out.println("User has been exited successfully!");
 					System.exit(0);
 				}
 				break;
 
 			default:
-				System.err.println("Invalid choice!");
+				System.out.println("Invalid choice!");
 				System.out.println(
 						"---------------------------------------------------\nEnter choice :\n1) Return to career choice menu\n2) Exit");
 				userOption = sc.nextInt();
@@ -265,6 +269,7 @@ public class UserUI {
 					System.err.println("Invalid choice!");
 					System.exit(0);
 				} else if (userOption == 2) {
+					System.out.println("User has been exited successfully!");
 					System.exit(0);
 				}
 			}

@@ -62,7 +62,7 @@ public class PasswordEncryptor {
 	        return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
 	    } 
 	    catch (Exception exp) {
-	        System.out.println("Error while decrypting: " + exp.toString());
+	        System.out.println("Invalid 'email id' or 'password'");
 	    }
 	    return null;
 	}
