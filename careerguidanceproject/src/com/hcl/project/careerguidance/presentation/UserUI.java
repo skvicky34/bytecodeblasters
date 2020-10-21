@@ -51,9 +51,9 @@ public class UserUI {
 
 			if (flag == false) {
 				try {
-					throw new ExtistingUserException();
-				} catch (ExtistingUserException e) {
-					System.err.println("Invalid 'email id' or 'password'");
+					throw new ExtistingUserException("Invalid 'email id' or 'password'");
+				} catch (ExtistingUserException exc) {
+					System.out.println(exc.getMessage());
 					System.exit(0);
 				}
 			}
@@ -62,10 +62,10 @@ public class UserUI {
 		case 2:
 
 			System.out.println("\nEnter the First Name:");
-			firstName = sc.nextLine();
+			firstName = sc.nextLine().trim();
 
 			System.out.println("\nEnter the Last Name:");
-			lastName = sc.nextLine();
+			lastName = sc.nextLine().trim();
 
 			boolean validEmail;
 			System.out.print("\nEmail rules:\n"
@@ -78,9 +78,9 @@ public class UserUI {
 				validEmail = UserDetailValidator.isValidEmailAddress(email);
 				if (validEmail == false) {
 					try {
-						throw new InvalidInputDataException();
+						throw new InvalidInputDataException("\"Invalid 'Email ID'!. Please provide correct 'Email ID' as per the rule\"");
 					} catch (InvalidInputDataException exc) {
-						System.out.println("Invalid 'Email ID'!. Please provide correct 'Email ID' as per the rule");
+						System.out.println(exc.getMessage());
 						System.out.println("\nEnter the Email ID:");
 						email = sc.nextLine();
 					}
@@ -99,10 +99,9 @@ public class UserUI {
 				validPassword = UserDetailValidator.isValidPassword(password);
 				if (validPassword == false) {
 					try {
-						throw new InvalidInputDataException();
+						throw new InvalidInputDataException("Invalid 'password'!. Please provide the correct 'password' as per the rule");
 					} catch (InvalidInputDataException exc) {
-						System.out
-								.println("Invalid 'password'!. Please provide the correct 'password' as per the rule");
+						System.out.println(exc.getMessage());
 						System.out.println("\nEnter the Password:");
 						password = sc.nextLine();
 					}
@@ -116,7 +115,7 @@ public class UserUI {
 
 			boolean validMobNo;
 			System.out.println("\nMobile Number rules :\n**The first digit should contain number between 7 to 9."
-					+ "The rest 9 digit can contain any number between 0 to 9.\n"
+					+ "and rest ot the 9 digits can contain any number between 0 to 9.\n"
 					+ "**Can have 11 digits also by including 0 at the starting.\n"
 					+ "**Can be of 12 digits also by including +91 at the starting\n"
 					+ "**Can be of 14 digits also by including 0091 at the starting\n");
@@ -126,10 +125,9 @@ public class UserUI {
 				validMobNo = UserDetailValidator.isValidMobileNo(mobileNo);
 				if (validMobNo == false) {
 					try {
-						throw new InvalidInputDataException();
+						throw new InvalidInputDataException("Invalid 'mobile number'!. Please provide the correct 'mobile number' as per the rule");
 					} catch (InvalidInputDataException exc) {
-						System.out.println(
-								"Invalid 'mobile number'!. Please provide the correct 'mobile number' as per the rule");
+						System.out.println(exc.getMessage());
 						System.out.println("\nEnter the Mobile Number:");
 						mobileNo = sc.nextLine();
 					}

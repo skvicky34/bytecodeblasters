@@ -20,7 +20,6 @@ public class User {
 
 	public User(String firstName, String lastName, String emailId, String password, String mobileNo,
 			String qualifiation) {
-		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailId = emailId;

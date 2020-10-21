@@ -7,9 +7,9 @@ public class ExtistingUserException extends Exception {
 	
 	private static final long serialVersionUID = 1L;
 
-	public ExtistingUserException() {
+	public ExtistingUserException(String msg) {
 		
-		super();
+		super(msg);
 	}
 
 }

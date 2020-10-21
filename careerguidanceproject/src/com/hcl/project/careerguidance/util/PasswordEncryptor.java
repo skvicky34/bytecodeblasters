@@ -38,7 +38,7 @@ public class PasswordEncryptor {
 	    } 
 	    catch (Exception exp) 
 	    {
-	        System.out.println("Invalid 'email id' or 'password'");
+	        System.out.println("Invalid 'password'");
 	    }
 	    return null;
 	}
@@ -62,7 +62,7 @@ public class PasswordEncryptor {
 	        return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
 	    } 
 	    catch (Exception exp) {
-	        System.out.println("Invalid 'email id' or 'password'");
+	        System.out.println("Invalid password'");
 	    }
 	    return null;
 	}
